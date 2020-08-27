@@ -35,7 +35,6 @@ namespace SIPSorcery.SIP.App
         event SIPCallFailedDelegate CallFailed;
 
         SIPRequest Call(SIPCallDescriptor sipCallDescriptor);
-        SIPRequest Call(SIPCallDescriptor sipCallDescriptor, SIPEndPoint serverEndPoint);
         void Cancel();
         void Update(CRMHeaders crmHeaders);
     }

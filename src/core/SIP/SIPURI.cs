@@ -41,7 +41,7 @@ namespace SIPSorcery.SIP
 
         private static char[] m_invalidSIPHostChars = new char[] { ',', '"' };
 
-        private static SIPProtocolsEnum m_defaultSIPTransport = SIPProtocolsEnum.udp;
+        private static SIPProtocolsEnum m_defaultSIPTransport = SIPProtocolsEnum.tcp;
         private static SIPSchemesEnum m_defaultSIPScheme = SIPSchemesEnum.sip;
         private static string m_sipRegisterRemoveAll = SIPConstants.SIP_REGISTER_REMOVEALL;
         private static string m_uriParamTransportKey = SIPHeaderAncillary.SIP_HEADERANC_TRANSPORT;
