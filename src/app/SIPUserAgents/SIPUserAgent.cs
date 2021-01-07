@@ -1420,7 +1420,7 @@ namespace SIPSorcery.SIP.App
                 m_sipDialogue = uac.SIPDialogue;
                 m_sipDialogue.DialogueState = SIPDialogueStateEnum.Confirmed;
 
-                logger.LogInformation($"Call attempt to {m_uac.CallDescriptor.Uri} was answered.");
+                logger.LogInformation($"Call attempt to {uac.CallDescriptor.Uri} was answered.");
 
                 ClientCallAnswered?.Invoke(uac, sipResponse);
 
