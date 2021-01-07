@@ -513,6 +513,35 @@ namespace SIPSorcery.SIP.App
         }
 
         /// <summary>
+        /// This method can be used to start the processing of a new incoming call request.
+        /// The user agent will is acting as a server for this operation and it can be considered
+        /// the opposite of the Call method. This is only the first step in answering an incoming
+        /// call. It can still be rejected or answered after this point.
+        /// </summary>
+        /// <param name="inviteRequest">The invite request representing the incoming call.</param>
+        /// <returns>An ID string that needs to be supplied when the call is answered or rejected 
+        /// (used to manage multiple pending incoming calls).</returns>
+        public SIPServerUserAgent AcceptCallNoRing(SIPRequest inviteRequest)
+        {
+            UASInviteTransaction uasTransaction = new UASInviteTransaction(m_transport, inviteRequest, m_outboundProxy);
+            SIPServerUserAgent uas = new SIPServerUserAgent(m_transport, m_outboundProxy, null, null, SIPCallDirection.In, null, null, null, uasTransaction);
+            uas.ClientTransaction.TransactionStateChanged += (tx) => OnTransactionStateChange?.Invoke(tx);
+            uas.ClientTransaction.TransactionTraceMessage += (tx, msg) => OnTransactionTraceMessage?.Invoke(tx, msg);
+            uas.CallCancelled += (pendingUas) =>
+            {
+                CallEnded();
+                ServerCallCancelled?.Invoke(pendingUas);
+            };
+            uas.NoRingTimeout += (pendingUas) =>
+            {
+                ServerCallRingTimeout?.Invoke(pendingUas);
+            };
+
+            uas.Progress(SIPResponseStatusCodesEnum.Trying, null, null, null, null);
+            return uas;
+        }
+
+        /// <summary>
         /// Answers the call request contained in the user agent server parameter. Note the
         /// <see cref="AcceptCall(SIPRequest)"/> method should be used to create the user agent server.
         /// Any existing call will be hungup.
