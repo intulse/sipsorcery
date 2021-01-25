@@ -169,7 +169,7 @@ namespace SIPSorcery.SIP
                 IsSecure = true;
             }
 
-            //m_webSocketServer.Log.Level = WebSocketSharp.LogLevel.Debug;
+            m_webSocketServer.Log.Level = WebSocketSharp.LogLevel.Fatal;
 
             logger.LogInformation($"SIP WebSocket Channel created for {endPoint}.");
 

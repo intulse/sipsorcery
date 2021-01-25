@@ -1408,6 +1408,11 @@ namespace SIPSorcery.SIP.App
         /// <param name="sipResponse">The INVITE success response.</param>
         private async void ClientCallAnsweredHandler(ISIPClientUserAgent uac, SIPResponse sipResponse)
         {
+            if (uac == null || sipResponse == null)
+            {
+                return;
+            }
+
             if (sipResponse.StatusCode >= 200 && sipResponse.StatusCode <= 299)
             {
                 this.sdpRemote = sipResponse.Body;
